@@ -49,12 +49,12 @@ int main(int argc, char *argv[]) {
 	servaddr.sin_addr.s_addr = INADDR_ANY;
 
     //if stdin is s then send the character string over to the server
-    if (getc(stdin) == s){
+    if (getc(stdin) == 's'){
         fgets(buffer, MAX_LINE, stdin);
         sendto(conn_s, buffer, MAX_LINE, &servaddr, sizeof(struct sockaddr_in))
     }
     //if stdin is q then quit the program
-    if (getc(stdin) == q){
+    if (getc(stdin) == 'q'){
         exit(EXIT_SUCCESS);     //quit successfully as it was asked for by the user
     }
 }
