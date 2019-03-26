@@ -20,10 +20,9 @@ int main(int argc, char *argv[]) {
     int       list_s;                //  listening socket          
     int       conn_s;                //  connection socket         
     short int port;                  //  port number              
-    struct    sockaddr_in clientaddr;// client address 
+    struct    sockaddr_in clientaddr;//  client address 
     struct    sockaddr_in servaddr;  //  socket address structure  
     char      buffer[MAX_LINE];      //  character buffer          
-    char     *endptr;                //  for strtol()
 
     if (argc != 2){
         fprintf(stderr, "ERROR! Invalid number of arguments.\n");
@@ -53,6 +52,13 @@ int main(int argc, char *argv[]) {
         //try to receive the size of the message from the client
         if(recvfrom(list_s, buffer, MAX_LINE, 0, (struct sockaddr*) &clientaddr, sizeof(struct sockaddr_in))) <= 0){
             printf("ERROR! Could not receive from the given client address.\n");
+		    exit(EXIT_FAILURE); 
+        }
+
+        // Try to write to the client.
+        //TODO: add a check to see if the buffer only contains a new line character in which case the message should not be sent back. 
+        if((sendto(list_s, buffer, len, 0, (struct sockaddr*) &clientaddr, sizeof(struct sockaddr_in))) <= 0 ){
+            printf("ERROR! Could not send to the given client address.\n");
 		    exit(EXIT_FAILURE); 
         }
     }
