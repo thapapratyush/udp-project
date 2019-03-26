@@ -22,5 +22,18 @@ int main(int argc, char *argv[]) {
     short int port;                  //  port number               
     struct    sockaddr_in servaddr;  //  socket address structure  
     char      buffer[MAX_LINE];      //  character buffer          
-    char     *endptr;                //  for strtol() 
+    char     *endptr;                //  for strtol()
+
+    if (argc != 2){
+        fprintf(stderr, "ERROR! Invalid number of arguments.\n");
+        exit(1);
+    } else {
+        port = atoi(argv[1])        // since server is invoked by the command: <server> <port>
+        printf("Port number- %d\n", port);
+    }
+
+    if ((list_s = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
+        printf("ERROR! Socket could not be created.\n");
+		exit(EXIT_FAILURE);
+    }
 }
