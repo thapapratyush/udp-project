@@ -19,7 +19,8 @@
 int main(int argc, char *argv[]) {
     int       list_s;                //  listening socket          
     int       conn_s;                //  connection socket         
-    short int port;                  //  port number               
+    short int port;                  //  port number              
+    struct    sockaddr_in clientaddr;// client address 
     struct    sockaddr_in servaddr;  //  socket address structure  
     char      buffer[MAX_LINE];      //  character buffer          
     char     *endptr;                //  for strtol()
@@ -49,7 +50,11 @@ int main(int argc, char *argv[]) {
 	}
 
     while(1){
-        //Implement getting message from the client on the socket
+        //try to receive the size of the message from the client
+        if(recvfrom(list_s, buffer, MAX_LINE, 0, (struct sockaddr*) &clientaddr, sizeof(struct sockaddr_in))) <= 0){
+            printf("ERROR! Could not receive from the given client address.\n");
+		    exit(EXIT_FAILURE); 
+        }
     }
     return 0;
 }
