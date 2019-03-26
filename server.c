@@ -42,4 +42,14 @@ int main(int argc, char *argv[]) {
     servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(port);
 	servaddr.sin_addr.s_addr = htonl(argv[1]);
+
+    if((bind(list_s, (struct sockaddr*) &servaddr, sizeof(servaddr))) < 0 ){
+		printf("ERROR! Failed to bind to the socket provided.\n");
+		exit(EXIT_FAILURE); 
+	}
+
+    while(1){
+        //Implement getting message from the client on the socket
+    }
+    return 0;
 }
