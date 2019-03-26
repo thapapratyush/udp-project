@@ -34,6 +34,12 @@ int main(int argc, char *argv[]) {
 
     if ((list_s = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
         printf("ERROR! Socket could not be created.\n");
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);         //exit with a failure since the server can no longer proceed
     }
+
+    memset(&servaddr, 0, sizeof(servaddr));     //create the server adress structure
+
+    servaddr.sin_family = AF_INET;
+	servaddr.sin_port = htons(port);
+	servaddr.sin_addr.s_addr = htonl(argv[1]);
 }
