@@ -33,8 +33,7 @@ int main(int argc, char *argv[]) {
         printf("Port number %d and IP address received %s", port, ip_address);
     }
 
-
-	if((soc = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
+	if(conn_s = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
         fprintf(stderr, "ERROR! Unable to create socket.\n");
         exit(EXIT_FAILURE);
     }
@@ -49,4 +48,13 @@ int main(int argc, char *argv[]) {
 	servaddr.sin_port = htons(port);
 	servaddr.sin_addr.s_addr = INADDR_ANY;
 
+    //if stdin is s then send the character string over to the server
+    if (getc(stdin) == s){
+        fgets(buffer, MAX_LINE, stdin);
+        sendto(conn_s, buffer, MAX_LINE, &servaddr, sizeof(struct sockaddr_in))
+    }
+    //if stdin is q then quit the program
+    if (getc(stdin) == q){
+        exit(EXIT_SUCCESS);     //quit successfully as it was asked for by the user
+    }
 }
